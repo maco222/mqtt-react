@@ -1,11 +1,12 @@
 import {Component, createElement, Children} from 'react';
 import PropTypes from 'prop-types';
-import MQTT from "mqtt";
+import connect from 'mqtt';
 
 export default class Connector extends Component {
     static propTypes = {
         mqtt: PropTypes.object,
         mqttProps: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+        mqttOpt: PropTypes.object,
         children: PropTypes.element.isRequired,
     };
 
@@ -29,9 +30,9 @@ export default class Connector extends Component {
     }
 
     componentWillMount() {
-        const { mqttProps, mqtt } = this.props;
+        const { mqttProps, mqttOpt, mqtt } = this.props;
 
-        this.mqtt = (mqtt) ? mqtt : MQTT.connect(mqttProps);
+        this.mqtt = (mqtt) ? mqtt : connect(mqttProps, mqttOpt);
 
         this.mqtt.on('connect', this._makeStatusHandler('connected'));
         this.mqtt.on('reconnect', this._makeStatusHandler('reconnect'));
