@@ -1,10 +1,10 @@
-import {Component, createElement, Children} from "react";
+import {Component, createElement, Children} from 'react';
 import PropTypes from 'prop-types';
 import MQTT from "mqtt";
 
 export default class Connector extends Component {
     static propTypes = {
-        mqqt: PropTypes.object,
+        mqtt: PropTypes.object,
         mqttProps: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
         children: PropTypes.element.isRequired,
     };
@@ -35,7 +35,7 @@ export default class Connector extends Component {
 
         this.mqtt.on('connect', this._makeStatusHandler('connected'));
         this.mqtt.on('reconnect', this._makeStatusHandler('reconnect'));
-        this.mqtt.on('close',  this._makeStatusHandler('closed'));
+        this.mqtt.on('close', this._makeStatusHandler('closed'));
         this.mqtt.on('offline', this._makeStatusHandler('offline'));
         this.mqtt.on('error', console.error);
 
@@ -48,17 +48,15 @@ export default class Connector extends Component {
 
     _makeStatusHandler = (status) => {
         return () => {
-            this.setState({ mqttStatus: status })
-        }
+            this.setState({ mqttStatus: status });
+        };
     };
-
-    render() {
-        return this.renderConnected();
-    }
 
     renderConnected() {
         return Children.only(this.props.children);
     }
 
-
+    render() {
+        return this.renderConnected();
+    }
 }

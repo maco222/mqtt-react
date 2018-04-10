@@ -1,6 +1,6 @@
-import {Component, createElement} from "react";
-import PropTypes from "prop-types";
-import omit from "object.omit";
+import {Component, createElement} from 'react';
+import PropTypes from 'prop-types';
+import omit from 'object.omit';
 
 
 function parse(message) {
@@ -20,7 +20,7 @@ function defaultDispatch(topic, message, packet) {
         ...state.data
     ];
     this.setState({ data: newData });
-};
+}
 
 
 export default function subscribe(opts = { dispatch: defaultDispatch }) {
@@ -44,7 +44,7 @@ export default function subscribe(opts = { dispatch: defaultDispatch }) {
                     subscribed: false,
                     data: [],
                 };
-                this.handler = dispatch.bind(this)
+                this.handler = dispatch.bind(this);
                 this.client.on('message', this.handler);
             }
 
@@ -57,14 +57,6 @@ export default function subscribe(opts = { dispatch: defaultDispatch }) {
                 this.unsubscribe();
             }
 
-            render() {
-                return createElement(TargetComponent, {
-                    ...omit(this.props, 'client'),
-                    data: this.state.data,
-                    mqtt: this.client
-                });
-            }
-
             subscribe() {
                 this.client.subscribe(topic);
                 this.setState({ subscribed: true });
@@ -75,7 +67,14 @@ export default function subscribe(opts = { dispatch: defaultDispatch }) {
                 this.setState({ subscribed: false });
             }
 
+            render() {
+                return createElement(TargetComponent, {
+                    ...omit(this.props, 'client'),
+                    data: this.state.data,
+                    mqtt: this.client
+                });
+            }
         }
         return MQTTSubscriber;
-    }
+    };
 }
