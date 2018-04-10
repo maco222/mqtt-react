@@ -48,9 +48,10 @@ export default function subscribe(opts = { dispatch: defaultDispatch }) {
                 this.client.on('message', this.handler);
             }
 
-
-            componentWillMount() {
-                this.subscribe();
+            componentWillReceiveProps(nextProps, nextState){
+                if (!this.state.subscribed){
+                    this.subscribe();
+                }
             }
 
             componentWillUnmount() {
