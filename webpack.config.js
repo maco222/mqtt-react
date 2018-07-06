@@ -6,7 +6,7 @@ const config = {
             {
                 test: /\.js?$/,
                 loader: 'babel-loader',
-                include: /src/,
+                include: /lib/,
                 exclude: /node_modules/
             }
         ]
