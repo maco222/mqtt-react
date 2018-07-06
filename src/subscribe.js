@@ -1,7 +1,7 @@
 import {Component, createElement} from 'react';
 import PropTypes from 'prop-types';
 import omit from 'object.omit';
-
+import uniqid;
 
 function parse(message) {
     try {
@@ -15,7 +15,7 @@ function parse(message) {
 function defaultDispatch(topic, message, packet) {
     const { state } = this;
     const m = parse(message);
-    this.setState({ message: m, topic: topic, packet: packet });
+    this.setState({ message: m, topic: topic, packet: packet, mid: uniqid() });
 }
 
 
@@ -40,6 +40,7 @@ export default function subscribe(opts = { dispatch: defaultDispatch }) {
                     subscribed: false,
                     message: "",
                     topic: "",
+                    mid: "",
                     packet: {}
                 };
                 this.handler = dispatch.bind(this);
@@ -72,6 +73,7 @@ export default function subscribe(opts = { dispatch: defaultDispatch }) {
                     message: this.state.message,
                     topic: this.state.topic,
                     packet: this.state.packet,
+                    mid: this.state.mid,
                     mqtt: this.client
                 });
             }
