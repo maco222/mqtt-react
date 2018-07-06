@@ -1,7 +1,7 @@
 import {Component, createElement} from 'react';
 import PropTypes from 'prop-types';
 import omit from 'object.omit';
-import uniqid;
+import 'uniqid';
 
 function parse(message) {
     try {
